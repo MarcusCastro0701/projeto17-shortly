@@ -144,39 +144,45 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 -- Data for Name: sessions; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.sessions VALUES (1, 1, 'f73dabe8-c513-4fe0-82f8-cdcfb68eaf30', '2022-12-21');
 
 
 --
 -- Data for Name: urls; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.urls VALUES (1, 1, 'FtnzVNhk', 'https://cdn.pixabay.com/photo/2013/07/12/19/17/cursor-154478__340.png', 1, '2022-12-21');
+INSERT INTO public.urls VALUES (3, 1, 'ISC85Aft', 'https://cdn.pixabay.com/photo/2017/03/08/14/20/flat-2126879__340.png', 0, '2022-12-23');
+INSERT INTO public.urls VALUES (4, 1, 'uiNBsIOd', 'https://cdn.pixabay.com/photo/2016/02/08/19/52/button-1187460__340.png', 0, '2022-12-23');
+INSERT INTO public.urls VALUES (5, 1, 'pd-EU6ba', 'https://cdn.pixabay.com/photo/2017/09/25/11/55/cyberspace-2784907__340.jpg', 0, '2022-12-23');
 
 
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO public.users VALUES (1, 'Marcus', 'marcus@marcus.com', '$2b$10$oc7bnvxm5U/8RM9IqWm8ten97jmeC3BZNhhfzKPai4N/9Y/gCxjca', '2022-12-20');
 
 
 --
 -- Name: sessions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.sessions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.sessions_id_seq', 1, true);
 
 
 --
 -- Name: urls_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.urls_id_seq', 1, false);
+SELECT pg_catalog.setval('public.urls_id_seq', 5, true);
 
 
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public.users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
@@ -225,6 +231,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: urls urls_fk0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.urls
+    ADD CONSTRAINT urls_fk0 FOREIGN KEY ("userId") REFERENCES public.users(id);
 
 
 --

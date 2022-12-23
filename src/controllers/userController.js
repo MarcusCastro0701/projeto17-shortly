@@ -9,10 +9,15 @@ dayjs.extend(customParseFormat);
 export async function signUp(req, res){
 
     const user = req.body;
+
+    if(!user){
+        console.log("body nao enviado");
+        res.sendStatus(422);
+        return
+    }
     
     const hashPassword = bcrypt.hashSync(user.password, 10);
     
-
     let today = dayjs().locale('pt-br').format('YYYY-MM-DD');
 
     if(user.password !== user.confirmPassword){
@@ -43,3 +48,4 @@ export async function signUp(req, res){
     }
 
 }
+
