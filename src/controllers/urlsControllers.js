@@ -174,7 +174,7 @@ export async function getUsersMe(req, res){
     const verificaUser = await connectionDB.query('SELECT * FROM sessions WHERE token=$1;', [token]);
     if(verificaUser.rows.length === 0){
         console.log("usuário não encontrado");
-        res.send(404);
+        res.sendStatus(404);
         return
     }
 
@@ -183,7 +183,7 @@ export async function getUsersMe(req, res){
     try {
         const query = await connectionDB.query('SELECT u.id, u.name, SUM(urls."visitCount") AS "visitCount",json_agg(urls.*)as "shortnedUrls" FROM users u JOIN urls ON urls."userId"=u.id WHERE urls."userId"=$1 GROUP BY u.id;', [userId]);
         console.log("query feita")
-        res.send(query.rows[0]).status(200);
+        res.status(200).send(query.rows[0]);
         return
 
     } catch (error) {
