@@ -167,7 +167,7 @@ export async function getUsersMe(req, res){
 
     if (!token || !authorization) {
         
-        res.sensStatus(401);
+        res.sendStatus(401);
         return
     }
 
