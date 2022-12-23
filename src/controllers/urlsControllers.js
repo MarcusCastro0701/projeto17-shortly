@@ -16,7 +16,7 @@ export async function postShort(req, res) {
 
     let today = dayjs().locale('pt-br').format('YYYY-MM-DD');
 
-    if (!token) {
+    if (!token || !url) {
         console.log("token não enviado");
         res.sensStatus(401);
         return
@@ -54,6 +54,11 @@ export async function getUrlbyId(req, res){
     
     const { id } = req.params;
 
+    if(!id){
+        res.sendStatus(401);
+        return
+    }
+
     const verificaUrl = await connectionDB.query('SELECT * FROM urls WHERE id=$1;', [id]);
     if(verificaUrl.rows.length === 0){
         console.log("id da url nao encontrada");
@@ -79,7 +84,11 @@ export async function getShort(req, res){
 
     const { shortUrl } = req.params;
 
-    console.log(shortUrl)
+    if(!shortUrl){
+        res.sendStatus(401);
+        return
+    }
+
     const verificaShort = await connectionDB.query('SELECT * FROM urls WHERE "shortUrl"=$1;', [shortUrl]);
     if(verificaShort.rows.length === 0){
         console.log("shortUrl não encontrada");
@@ -112,8 +121,8 @@ export async function deleteShort(req, res){
     const token = authorization?.replace("Bearer ", "");
     const { id } = req.params;
 
-    if (!token) {
-        console.log("token não enviado");
+    if (!token || !id) {
+        
         res.sensStatus(401);
         return
     }
@@ -156,8 +165,8 @@ export async function getUsersMe(req, res){
     const { authorization } = req.headers;
     const token = authorization?.replace("Bearer ", "");
 
-    if (!token) {
-        console.log("token não enviado ou header inválido");
+    if (!token || !authorization) {
+        
         res.sensStatus(401);
         return
     }
